@@ -1,8 +1,20 @@
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const tab = tabs[0];
-  if (tab && tab.url && tab.url.includes('youtube.com')) {
-    chrome.tabs.sendMessage(tab.id, { type: 'getCount' }, (res) => {
-      if (res) document.getElementById('count').textContent = res.count;
-    });
+const toggle = document.getElementById("toggle");
+const count = document.getElementById("count");
+
+// Load saved state
+chrome.storage.sync.get(["enabled", "adsSkipped"], (data) => {
+  toggle.checked = data.enabled !== false; // default true
+  count.textContent = data.adsSkipped || 0;
+});
+
+// Toggle handler
+toggle.addEventListener("change", () => {
+  chrome.storage.sync.set({ enabled: toggle.checked });
+});
+
+// Live-update the counter while popup is open
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.adsSkipped) {
+    count.textContent = changes.adsSkipped.newValue;
   }
 });

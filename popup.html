@@ -1,127 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      width: 220px;
-      background: #0a0a0a;
-      color: #fff;
-      font-family: 'Space Mono', monospace;
+      width: 280px;
+      font-family: 'DM Sans', sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
       padding: 20px;
-      user-select: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      background: #ff0000;
-      border-radius: 6px;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #ff4444 0%, #ff0844 100%);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-    }
-
-    .logo-text {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #fff;
+      color: white;
+      flex-shrink: 0;
     }
 
-    .status {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 14px;
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: #888;
+      margin-top: 1px;
+    }
+
+    /* Toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle .slider {
+      position: absolute;
+      inset: 0;
+      background: #333;
+      border-radius: 24px;
+      transition: background 0.25s;
+    }
+
+    .toggle .slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s;
+    }
+
+    .toggle input:checked + .slider {
+      background: #ff0844;
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(20px);
+    }
+
+    /* Stats */
+    .stat-card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 16px;
       text-align: center;
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: #00ff88;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
-      animation: pulse 2s infinite;
-      vertical-align: middle;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    .status-label {
-      font-size: 10px;
-      color: #666;
-      letter-spacing: 0.08em;
-      vertical-align: middle;
-    }
-
-    .count {
-      font-size: 36px;
+    .stat-number {
+      font-size: 32px;
       font-weight: 700;
-      color: #ff0000;
-      margin: 10px 0 2px;
-      line-height: 1;
+      background: linear-gradient(135deg, #ff4444, #ff0844);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
     }
 
-    .count-label {
-      font-size: 9px;
-      color: #444;
-      letter-spacing: 0.12em;
+    .stat-label {
+      font-size: 11px;
+      color: #888;
       text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 4px;
     }
 
-    .divider {
-      border: none;
-      border-top: 1px solid #1a1a1a;
-      margin: 14px 0;
-    }
-
-    .note {
-      font-size: 9px;
-      color: #333;
-      line-height: 1.6;
-      letter-spacing: 0.03em;
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 10px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="logo">
-    <div class="logo-icon">⏭</div>
-    <div class="logo-text">YT AD SKIPPER</div>
-  </div>
-
-  <div class="status">
+  <div class="header">
+    <div class="logo">▶</div>
     <div>
-      <span class="status-dot"></span>
-      <span class="status-label">ACTIVE</span>
+      <div class="title">YT Ad Skipper</div>
+      <div class="subtitle">Auto-skip YouTube ads</div>
     </div>
-    <div class="count" id="count">0</div>
-    <div class="count-label">ads skipped</div>
   </div>
 
-  <hr class="divider">
-
-  <div class="note">
-    Skippable ads → auto-clicked.<br>
-    Unskippable ads → muted &amp; fast-forwarded.
+  <div class="toggle-row">
+    <span class="toggle-label">Enabled</span>
+    <label class="toggle">
+      <input type="checkbox" id="toggle" checked />
+      <span class="slider"></span>
+    </label>
   </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="count">0</div>
+    <div class="stat-label">Ads Skipped</div>
+  </div>
+
+  <div class="footer">Works automatically on YouTube</div>
 
   <script src="popup.js"></script>
 </body>
